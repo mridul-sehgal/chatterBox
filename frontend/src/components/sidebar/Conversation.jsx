@@ -1,11 +1,18 @@
-const Conversation = () => {
-  return (
+import useConversation from "../../zustand/useConversation"
+const Conversation = ({conversation,lastIdx,emoji}) => {
+  const {selectedConversation,setSelectedConversation}=useConversation()
+  const isSelected=selectedConversation?._id===conversation._id;
+  return (   
     <>
-      <div className="flex gap-2 items-center hover:bg-gradient-to-r from-pink-500 to-purple-500">
+      <div className={`flex gap-2 items-center hover:bg-gradient-to-r from-pink-500 to-purple-500
+        ${isSelected?"bg-gradient-to-r from-pink-500 to-purple-500":""}
+        `}
+        onClick={()=> setSelectedConversation(conversation)}
+        >
         <div className=" avatar online">
           <div className="w-12 rounded-full">
             <img
-              src="https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=0&k=20&c=AVVJkvxQQCuBhawHrUhDRTCeNQ3Jgt0K1tXjJsFy1eg="
+              src={conversation.profilePic}
               alt="user avatar"
             />
           </div>
@@ -13,12 +20,14 @@ const Conversation = () => {
 
         <div className="flex flex-col flex-1">
             <div className="flex gap-3 justify-between">
-                <p className="font-bold text-gray-200">Mridul Sehgal</p>
-                <span className="text-xl">😂</span>
+                <p className="font-bold text-gray-200">{conversation.fullname}</p>
+                <span className="text-xl">{emoji}</span>
             </div>
         </div>
       </div>
-      <div className="divider my-0 py-0 h-1"></div>
+
+      {!lastIdx && <div className="divider my-0 py-0 h-1"></div>}
+
     </>
   );
 };

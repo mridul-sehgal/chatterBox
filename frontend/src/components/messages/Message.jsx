@@ -1,17 +1,27 @@
-const Message = () => {
+import useConversation from "../../zustand/useConversation";
+import {useAuthContext}from "../../context/AuthContext"
+import { extractTime } from "../../utils/extractTime";
+const Message = ({message}) => {
+  const {authUser} = useAuthContext()
+  const {selectedConversation}=useConversation()
+  const fromMe=message.senderId===authUser._id;
+  const chatClassName=fromMe?"chat-end":"chat-start"
+  const formattedDate=extractTime(message.createdAt)
+  const profilePic=fromMe?authUser.profilePic:selectedConversation.profilePic
+  const bubbleBgColor=fromMe?"bg-pink-500":""
   return (
-    <div className="chat chat-end">
+    <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
-            src="https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=0&k=20&c=AVVJkvxQQCuBhawHrUhDRTCeNQ3Jgt0K1tXjJsFy1eg="
+          src={profilePic}
             alt="chat bubble"
           />
         </div>
       </div>
-      <div className="chat-bubble text-white bg-pink-500 ">Hi! How are you?</div>
+      <div className={`chat-bubble text-white ${bubbleBgColor} `}>{message.message}</div>
       <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
-        12:42 pm
+        {formattedDate}
       </div>
     </div>
   );

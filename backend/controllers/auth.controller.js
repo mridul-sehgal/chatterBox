@@ -11,14 +11,17 @@ export const Login = async (req, res) => {
       user?.password || ""
     );
 
+    
     if (!user || !isPasswordCorrect) {
-      res.status(400).json({ error: "Internal username or password" });
+      return res.status(400).json({ error: "Incorrect username or password" });
     }
 
     generateTokenAndSetCookie(user._id, res);
-    res.status(201).json({
+    res.status(200).json({
       _id: user._id,
+      fullname:user.fullname,
       username: user.username,
+      profilePic:user.profilePic
     });
   } catch (error) {
     console.log("Error in login controller", error);
