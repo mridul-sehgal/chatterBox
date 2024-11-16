@@ -5,11 +5,12 @@ import cookieParser from "cookie-parser";
 import messageRoutes from "./routes/message.routes.js"
 import connectToMOngoDB from "./db/connectToMongoDB.js";
 import userRoutes from "./routes/user.routes.js";
+import { app,server } from "./socket/socket.js";
+
+// const app=express();
+const PORT=process.env.PORT||5000
 
 dotenv.config()
-
-const PORT=process.env.PORT||5000
-const app=express();
 
 
 app.use(express.json())
@@ -25,7 +26,7 @@ app.use("/api/users",userRoutes)
 //     res.send("HELLO WORLD")
 // })
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     connectToMOngoDB();
     console.log(`Server is Running on Port ${PORT}`)
 })
