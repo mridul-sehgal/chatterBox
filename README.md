@@ -17,7 +17,7 @@ The platform allows users to connect, chat instantly, and see who is online in r
 
 🔗 **Live Website**
 
-[https://your-live-link.com](https://chatterbox-prod-cfts.onrender.com/)
+[Click here to chat](https://chatterbox-prod-cfts.onrender.com/)
 
 
 # 🧠 About The Project
