@@ -52,15 +52,17 @@ export const Signin = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const boyProfilPic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    const girlProfilPic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+    const avatarGender = gender === "male" ? "male" : "female";
+    const profilePic = `https://api.dicebear.com/6.x/avataaars/svg?seed=${encodeURIComponent(
+      username
+    )}&gender=${avatarGender}&backgroundColor=b6e3f4,c0aede,feb2e2&radius=50`;
 
     const newUser = new User({
       fullname,
       username,
       password: hashedPassword,
       gender,
-      profilePic: gender === "male" ? boyProfilPic : girlProfilPic,
+      profilePic,
     });
 
     if (newUser) {
